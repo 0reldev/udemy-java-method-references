@@ -3,8 +3,7 @@ package dev.lpa;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.BinaryOperator;
-import java.util.function.Supplier;
+import java.util.function.*;
 
 class PlainOld {
 
@@ -51,6 +50,40 @@ public class Main {
 //        Creating a PlainOld Object
 //        Creating a PlainOld Object
 //        Creating a PlainOld Object
+
+        calculator((s1, s2) -> s1 + s2, "Hello", "World");
+//        Result of the operation: HelloWorld
+
+        calculator((s1, s2) -> s1.concat(s2), "Hello", "World");
+//        Result of the operation: HelloWorld
+
+        calculator(String::concat, "Hello", "World");
+//        Result of the operation: HelloWorld
+
+        BinaryOperator<String> b1 = String::concat;
+        System.out.println(b1.apply("Hello", "World"));
+//        HelloWorld
+
+        BiFunction<String, String, String> b2  = String::concat;
+        System.out.println(b2.apply("Hello", "World"));
+//        HelloWorld
+
+        UnaryOperator<String> u1 = String::toUpperCase;
+        System.out.println(u1.apply("Hello"));
+//        HELLO
+
+        String result = "Hello".transform(u1);
+        System.out.println("Result = " +  result);
+//        Result = HELLO
+
+        result = result.transform(String::toLowerCase);
+        System.out.println("Result = " + result);
+//        Result = hello
+
+        Function<String, Boolean> f0 = String::isEmpty;
+        boolean resultBoolean = result.transform(f0);
+        System.out.println("Result = " + resultBoolean);
+//        Result = false
     }
 
     private static <T> void calculator(BinaryOperator<T> function, T value1, T value2) {
